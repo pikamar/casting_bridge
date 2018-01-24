@@ -6,3 +6,10 @@ body {
   text-align: center;
 }
 
+.fancybox-inner .caption {
+	background-color: rgba(255,255,255,0.5);
+	bottom: 0;
+	left: 0;
+	padding: 2px 5px;
+	position: absolute;
+}

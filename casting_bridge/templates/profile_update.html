@@ -18,21 +18,14 @@
                 {% for photo in photos.items %}
                     <div class="col-md-3">
                         <div class="thumbnail">
-                            <a href="{{ url_for('photo_direct_dir', filename=photo.name) }}?{{ photo.created.utcnow() }}" class="thumbnail-image" target="_blank" rel="profile-images" data-fancybox="profile-images" title="{{ photo.created.strftime('%d-%m-%Y %H:%M:%S') }}"><img src="{{ url_for('thumbnail_dir', filename=photo.name) }}?{{ photo.created.utcnow() }}" class="img-responsive"></a>
-                            <p>{{ photo.created.strftime("%d-%m-%Y %H:%M:%S") }}</p>
+                            <a href="{{ url_for('photo_direct_dir', filename=photo.name) }}?{{ photo.created.utcnow() }}" class="thumbnail-image" target="_blank" rel="profile-images" data-fancybox="profile-images"><img src="{{ url_for('thumbnail_dir', filename=photo.name) }}?{{ photo.created.utcnow() }}" class="img-responsive"></a>
                             <div class="caption">
-                                <a href="{{ url_for('photo_dir', filename=photo.name) }}" class="fa fa-download" aria-hidden="true">
-                                    Lejupielādēt
-                                </a>
-                                <a href="{{ url_for('catalog.photo_delete', person_id=person.id, photo_id=photo.id) }}" class="profile-image delete fa fa-trash" aria-hidden="true">
-                                    Dzēst
-                                </a>
-                                <a href="{{ url_for('catalog.photo_rotate', person_id=person.id, photo_id=photo.id, angle=-90) }}" class="profile-image rotate fa fa-repeat" aria-hidden="true">
-                                    Pagriezt pulksteņrādītāja virzienā
-                                </a>
-                                <a href="{{ url_for('catalog.photo_rotate', person_id=person.id, photo_id=photo.id, angle=90) }}" class="profile-image rotate fa fa-undo" aria-hidden="true">
-                                    Pagriezt pret-pulksteņrādītāja virzienā
-                                </a>
+                                <a href="{{ url_for('photo_dir', filename=photo.name) }}" class="fa fa-download" aria-hidden="true" title="Lejupielādēt">&nbsp;</a>
+                                <a href="{{ url_for('catalog.photo_delete', person_id=person.id, photo_id=photo.id) }}" class="profile-image delete fa fa-trash" aria-hidden="true" title="Dzēst">&nbsp;</a>
+                                <a href="{{ url_for('catalog.photo_rotate', person_id=person.id, photo_id=photo.id, angle=-90) }}" class="profile-image rotate fa fa-repeat" aria-hidden="true" title="Pagriezt pulksteņrādītāja virzienā">&nbsp;</a>
+                                <a href="{{ url_for('catalog.photo_rotate', person_id=person.id, photo_id=photo.id, angle=90) }}" class="profile-image rotate fa fa-undo" aria-hidden="true" title="Pagriezt pret-pulksteņrādītāja virzienā">&nbsp;</a>
+                                <br />
+                                {{ photo.created.strftime("%d-%m-%Y %H:%M:%S") }}
                             </div>
                         </div>
                     </div>
@@ -574,8 +567,8 @@
             //     test = this;
             // },
             afterLoad: function() {
-                this.outer
-                    .after($(this.element).siblings('.caption').eq(0).html());
+                this.inner
+                    .append($(this.element).siblings('.caption').clone());
 
                 $(this.outer).parent().find('.profile-image.delete').on('click', function(){
                     return confirm('Vai tiešām vēlaties dzēst šo bildi?');
@@ -588,7 +581,12 @@
             helpers     : {
                 title   : { type : 'inside' },
                 buttons : {}
-            }
+            },
+            padding: 5,
+            loop: false,
+            arrows: false,
+            nextClick: false,
+            prevClick: false
         });
     });
 
