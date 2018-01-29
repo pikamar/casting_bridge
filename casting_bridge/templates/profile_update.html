@@ -24,8 +24,7 @@
                                 <a href="{{ url_for('catalog.photo_delete', person_id=person.id, photo_id=photo.id) }}" class="profile-image delete fa fa-trash" aria-hidden="true" title="Dzēst">&nbsp;</a>
                                 <a href="{{ url_for('catalog.photo_rotate', person_id=person.id, photo_id=photo.id, angle=-90) }}" class="profile-image rotate fa fa-repeat" aria-hidden="true" title="Pagriezt pulksteņrādītāja virzienā">&nbsp;</a>
                                 <a href="{{ url_for('catalog.photo_rotate', person_id=person.id, photo_id=photo.id, angle=90) }}" class="profile-image rotate fa fa-undo" aria-hidden="true" title="Pagriezt pret-pulksteņrādītāja virzienā">&nbsp;</a>
-                                <br />
-                                {{ photo.created.strftime("%d-%m-%Y %H:%M:%S") }}
+                                <input type="text" value="{{ photo.created.strftime('%d-%m-%Y %H:%M:%S') }}" class="photo-date text-right" data-person-id="{{ person.id }}" data-photo-id="{{ photo.id }}" size="7" />
                             </div>
                         </div>
                     </div>
@@ -559,6 +558,39 @@
     <script type="text/javascript">
 
     $(document).on('ready', function() {
+        $('.photo-date').on('change', function(){
+            var thisDate = $(this);
+            $(thisDate).addClass('bg-warning');
+
+            $.ajax({
+                dataType: "html",
+                url: "{{ url_for('catalog.update_profile_photo') }}",
+                data: {
+                    person: $(thisDate).data('person-id'),
+                    photo: $(thisDate).data('photo-id'),
+                    date: $(thisDate).val()
+                },
+                success: function(){
+                    $(thisDate)
+                        .removeClass('bg-danger')
+                        .removeClass('bg-warning')
+                        .addClass('bg-success');
+                }
+            })
+                // .done(function(){
+                //     $(thisDate)
+                //         .removeClass('bg-danger')
+                //         .removeClass('bg-warning')
+                //         .addClass('bg-success');
+                // })
+                .fail(function(){
+                    $(thisDate)
+                        .removeClass('bg-warning')
+                        .addClass('bg-danger');
+                })
+            ;
+        });
+
         $("#input-4").fileinput({showCaption: false});
 
         $("[data-fancybox]").fancybox({
