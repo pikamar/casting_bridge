@@ -571,7 +571,7 @@
         var profileID = $(elem).data('profile-id');
         if (favorites[profileID])
         {
-            favorites[profileID] = false;
+            delete favorites[profileID];
             $(elem).html('Favorīts');
         }
         else
@@ -678,9 +678,7 @@
         //pickerReferer: 'input',
         //pickerPosition: 'bottom-left',
         autoclose: true
-    });//.on('changeDate', function(ev){
-        //alert("valueOf"  );
-    //});
+    });
 
     $('.search_selectpicker').selectpicker({
         size: 8,

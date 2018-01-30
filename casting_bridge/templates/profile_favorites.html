@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block container %}
+
+        <div class="section">
+          <div class="container">
+
+            <div class="row">
+              <div class="col-md-12">
+                <h1 class="text-center">Profilu favorīti</h1>
+                <!--p class="text-center"></p-->
+                <!--p class="text-center">{{ profiles.pages }}</p>
+                <p class="text-center">{{ profiles.per_page }}</p-->
+              </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+            {% for profile in profiles.items %}
+
+                <div class="col-md-3">
+                    <a href="{{ url_for('catalog.update_profile', id=profile.id) }}">
+                    {% if profile.profile_image is not none %}
+                        <img src="{{ url_for('profile_dir', filename=profile.profile_image) }}" class="center-block img-circle img-responsive">
+
+                    {% else %}
+                        <img src="{{ url_for('static', filename='img/user_placeholder.jpg') }}" class="center-block img-circle img-responsive">
+                    {% endif %}
+                    <h3 class="text-center">{{ profile.name }}</h3>
+                    <p class="text-center">ID-{{ profile.id }}</p>
+                    </a>
+                </div>
+                <!--p class="text-center">{{ loop.index }}</p-->
+
+            {% if loop.index is divisibleby 4 %}
+            </div> <!-- end row-->
+            <div class="row">
+            {% endif %}
+
+            {% endfor %}
+            </div> <!-- end row-->
+
+            <div class="container">
+                <div class="col-md-12 col-md-offset-5">
+                {% if profiles.has_prev %}
+                  <a href="{{ url_for(request.endpoint, page=profiles.prev_num, **request.args) }}">
+                    {{ "<< Iepriekšējā lapa" }}
+                  </a>
+                {% else %}
+                  {{ "<< Iepriekšējā lapa" }}
+                {% endif %} |
+
+                {% for page in profiles.iter_pages() %}
+                  {% if page %}
+                    {% if page != profiles.page %}
+                      <a href="{{ url_for(request.endpoint, page=page, **request.args) }}">{{ page }}</a>
+                    {% else %}
+                      <strong>{{ page }}</strong>
+                    {% endif %}
+                  {% else %}
+                    <span class=ellipsis>…</span>
+                  {% endif %}
+                {% endfor %}
+
+                {% if profiles.has_next %}
+                  <a href="{{ url_for(request.endpoint, page=profiles.next_num, **request.args) }}">
+                    {{ "Nākošā lapa >>" }}
+                  </a>
+                {% else %}
+                  {{ "Nākošā lapa >>" }}
+                {% endif %}
+                </div>
+            </div>
+
+          </div>
+        </div>
+
+    <script type="text/javascript">
+      var skills = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        initialize: false,
+        // local: [
+        //   {% for skill in skills %}
+        //     { id:{{ skill.id }}, name:"{{ skill.tag_lv }}" },
+        //   {% endfor %}
+        // ],
+        // identify: function(obj) { return obj.id; },
+        prefetch: {
+          url: '/api/classifier',
+          cache : false,
+          filter: function(list) {
+            return $.map(list.objects, function(classifier) {
+              return { name: classifier.tag_lv, id: classifier.id };
+            });
+          }
+        }
+      });
+      skills.initialize();
+
+      var skillElem = $('#skills');
+      skillElem.tagsinput({
+        freeInput: false,
+        trimValue: true,
+        itemValue: 'id',
+        itemText: 'name',
+        typeaheadjs: [
+          {
+              hint: true,
+              highlight: true
+          },
+          {
+              name: 'objects',
+              displayKey: 'name',
+              source: skills.ttAdapter()
+          }]
+      });
+
+      {% for skill in skills %}
+      skillElem.tagsinput('add', { "id": {{ skill.id }}, "name": "{{ skill.tag_lv }}" });
+      {% endfor %}
+
+    </script>
+
+{% endblock %}
