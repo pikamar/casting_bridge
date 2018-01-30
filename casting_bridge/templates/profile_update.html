@@ -475,6 +475,7 @@
                     <a href="{{ url_for('catalog.profile_print', id=person.id) }}">
                         <button type="button" class="btn btn-default pull-right">Drukāt</button>
                     </a>
+                    <button type="button" class="btn btn-warning pull-right favorite" data-profile-id="{{person.id}}">Favorīts</button>
                     <a href="{{ url_for('catalog.profile_delete', id=person.id) }}">
                         <button type="button" class="btn btn-danger">Dzēst</button>
                     </a>
@@ -557,9 +558,32 @@
 
     <script type="text/javascript">
 
+    var favorites = Cookies.get('favorites');
+    if (!favorites)
+    {
+        favorites = {};
+    }
+    else
+    {
+        favorites = JSON.parse(favorites);
+    }
+    toggleFavorite = function (elem) {
+        var profileID = $(elem).data('profile-id');
+        if (favorites[profileID])
+        {
+            favorites[profileID] = false;
+            $(elem).html('Favorīts');
+        }
+        else
+        {
+            favorites[profileID] = true;
+            $(elem).html('Ne-favorīts');
+        }
+    };
+
     $(document).on('ready', function() {
         $('.photo-date').on('change', function(){
-            var thisDate = $(this);
+            var thisDate = this;
             $(thisDate).addClass('bg-warning');
 
             $.ajax({
@@ -577,12 +601,6 @@
                         .addClass('bg-success');
                 }
             })
-                // .done(function(){
-                //     $(thisDate)
-                //         .removeClass('bg-danger')
-                //         .removeClass('bg-warning')
-                //         .addClass('bg-success');
-                // })
                 .fail(function(){
                     $(thisDate)
                         .removeClass('bg-warning')
@@ -590,6 +608,24 @@
                 })
             ;
         });
+        $(".favorite")
+            .each(function(){
+                var profileID = $(this).data('profile-id');
+                if (favorites[$(this).data('profile-id')])
+                {
+                    $(this).html('Ne-favorīts');
+                }
+                else
+                {
+                    $(this).html('Favorīts');
+                }
+            })
+            .on('click', function(){
+                toggleFavorite(this);
+                Cookies.set('favorites', favorites, { expires: 30 });
+            })
+        ;
+
 
         $("#input-4").fileinput({showCaption: false});
 
