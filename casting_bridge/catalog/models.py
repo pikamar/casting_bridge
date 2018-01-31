@@ -163,6 +163,7 @@ class RadioButtonField(SelectField):
 
 class BaseForm(Form):
     # Personal data
+    created = DateField('Birthdate')
     species = RadioButtonField('Species', validators=[InputRequired()], choices=[('man',u'Vīrietis'),('woman',u'Sieviete')], default='')
     name = TextField('Name', validators=[InputRequired(),Length(max=255)])
     surname = TextField('Surname', validators=[InputRequired(),Length(max=255)])
