@@ -43,12 +43,19 @@
                 </div>
               </div><br>
               <div class="row">
-                <div class="col-md-2"></div>
                 <div class="col-md-2">
                   <input type="text" name="name" id="name" class="form-control" aria-label="..." placeholder="Vārds" value="{{ request.args.name }}" />
                 </div>
                 <div class="col-md-2">
                   <input type="text" name="surname" id="surname" class="form-control" aria-label="..." placeholder="Uzvārds" value="{{ request.args.surname }}" />
+                </div>
+                <div class="col-md-2">
+                  <select name="city" id="city" class="form-control">
+                    <option value="">Pilsēta</option>
+                    {% for city in cities %}
+                    <option value="{{ city.id }}"{% if '' ~ city.id == request.args.city %} selected{% endif %}>{{ city.tag_lv }}</option>
+                    {% endfor %}
+                  </select>
                 </div>
                 <div class="col-md-2">
                   <input type="text" name="skills" id="skills" class="form-control" aria-label="..." placeholder="Īpašības" />
@@ -67,12 +74,20 @@
 
                 <div class="col-md-3">
                     <a href="{{ url_for('catalog.update_profile', id=profile.id) }}">
+                    <img
                     {% if profile.profile_image is not none %}
-                        <img src="{{ url_for('profile_dir', filename=profile.profile_image) }}" class="center-block img-circle img-responsive">
-
+                      src="{{ url_for('profile_dir', filename=profile.profile_image) }}"
                     {% else %}
-                        <img src="{{ url_for('static', filename='img/user_placeholder.jpg') }}" class="center-block img-circle img-responsive">
+                      src="{{ url_for('static', filename='img/user_placeholder.jpg') }}"
                     {% endif %}
+                      class="center-block img-circle img-responsive
+                      {% if profile.is_active %}
+                      p-unavailable
+                      {% elif curtime - profile.modified > pDeltaTime %}
+                      p-old
+                      {% else %}
+                      p-available
+                      {% endif %}" />
                     <h3 class="text-center">{{ profile.name }}</h3>
                     <p class="text-center">ID-{{ profile.id }}</p>
                     </a>
@@ -170,10 +185,18 @@
       $(document).on('ready', function() {
         $('.form-reset').on('click', function(){
           skillElem.tagsinput('removeAll');
+
+          $('#city').val(0);
+        });
+
+        $('.search_selectpicker').selectpicker({
+            size: 8,
+            //maxOptions: 1,
+            //doneButton: true,
+            //doneButtonText: 'Aizvērt',
+            liveSearch: true
         });
       });
-
-
     </script>
 
 {% endblock %}

@@ -6,6 +6,9 @@ from wtforms.widgets import html_params, Select, HTMLString
 from flask_wtf import Form
 from flask_wtf.html5 import TelField
 from casting_bridge import db
+import datetime
+from datetime import date
+import pytz
 
 class Document(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -162,8 +165,11 @@ class RadioButtonField(SelectField):
     widget = CustomRadioInput()
 
 class BaseForm(Form):
+    creationDate = datetime.datetime.now(pytz.timezone("Europe/Riga"))
+    # creationDate = datetime.datetime.strptime(creationDate, '%d-%m-%Y %H:%M:%S')
+
     # Personal data
-    created = DateField('Birthdate')
+    created = DateField('Created', default=creationDate)
     species = RadioButtonField('Species', validators=[InputRequired()], choices=[('man',u'Vīrietis'),('woman',u'Sieviete')], default='')
     name = TextField('Name', validators=[InputRequired(),Length(max=255)])
     surname = TextField('Surname', validators=[InputRequired(),Length(max=255)])

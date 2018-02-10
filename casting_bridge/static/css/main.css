@@ -13,3 +13,25 @@ body {
 	padding: 2px 5px;
 	position: absolute;
 }
+
+.form-control[required] {
+	background-color: #FF3333;
+	color: #fff;
+}
+
+.img-circle {
+	border-width: 5px;
+	border-style: solid;
+}
+
+.p-available {
+	border-color: #0C0;
+}
+
+.p-old {
+	border-color: #f90;
+}
+
+.p-unavailable {
+	border-color: #999;
+}

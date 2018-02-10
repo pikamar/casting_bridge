@@ -94,8 +94,8 @@
 
                     <fieldset class="form-group">
                         <div class="col-lg-12">
-                            <!--{{ form.name.label(class="control-label") }}--><br>  {{ form.name(class="form-control", placeholder="Vārds*", maxlength=255) }}<br>
-                            {{ form.surname(class="form-control", placeholder="Uzvārds*", maxlength=255) }}<br>
+                            <!--{{ form.name.label(class="control-label") }}--><br>  {{ form.name(class="form-control", placeholder="Vārds*", required="required", maxlength=255) }}<br>
+                            {{ form.surname(class="form-control", placeholder="Uzvārds*", required="required", maxlength=255) }}<br>
                             {{ form.nickname(class="form-control", placeholder="Skatuves vārds", maxlength=255) }}<br>
                             {{ form.pcode(class="form-control", placeholder="Personas kods", maxlength=255) }}<br>
                             {{ form.contract_nr(class="form-control", placeholder="Vienošanās numurs", maxlength=255) }}
@@ -105,7 +105,7 @@
                     <fieldset class="form-group">
                         <div class="col-lg-12">
                             <!--label for="dtp_input2" class="col-md-4 control-label">Date Picking</label-->
-                            <div class="input-group date col-md-12" id="datetimepicker">
+                            <div class="input-group date col-md-12 form_date" data-date="">
                                 {{ form.birthdate(class="form-control", placeholder="Dzimšanas diena*") }}
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -201,7 +201,7 @@
                         </div>
                         <div class="col-lg-9">
                             <div class="input-group">
-                                {{ form.my_phone(class="form-control", placeholder="Telefona numurs*", maxlength=255) }}
+                                {{ form.my_phone(class="form-control", placeholder="Telefona numurs*", required="required", maxlength=255) }}
                             </div>
                         </div>
                     </fieldset>
@@ -228,7 +228,7 @@
                                 <span class="input-group-addon">
                                     <i class="fa fa-at"></i>
                                 </span>
-                                {{ form.email(class="form-control", placeholder="E-pasts*", maxlength=255) }}
+                                {{ form.email(class="form-control", placeholder="E-pasts*", required="required", maxlength=255) }}
                             </div>
                         </div>
                     </fieldset>
@@ -239,7 +239,7 @@
                                 <span class="input-group-addon">
                                     <i class="fa fa-envelope-o"></i>
                                 </span>
-                                {{ form.home_address(class="form-control", placeholder="Dzīvesvietas adrese*", maxlength=255) }}
+                                {{ form.home_address(class="form-control", placeholder="Dzīvesvietas adrese*", required="required", maxlength=255) }}
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -423,7 +423,20 @@
 
             <div class="row">
               <div class="col-md-4">
+                <div class="well">
+                    <h3><i class="fa fa-sticky-note-o fa-fw"></i>Portfolio</h3>
                     <!-- empty -->
+                    <fieldset class="form-group">
+                        <div class="col-lg-12">
+                            <label class="control-label" for="created">Pievienots datubāzei</label>
+                            <div class="input-group date col-md-12 form_date" data-date="">
+                                {{ form.created(class="form-control", placeholder="Y-M-D") }}
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
               </div>
               <div class="col-md-4">
                 <div class="well">
@@ -638,6 +651,8 @@
                 this.inner
                     .append($(this.element).siblings('.caption').clone());
 
+                $(this.outer).parent().find('.photo-date').detach();
+
                 $(this.outer).parent().find('.profile-image.delete').on('click', function(){
                     return confirm('Vai tiešām vēlaties dzēst šo bildi?');
                 });
@@ -667,8 +682,7 @@
 //        blueimp.Gallery(links, options);
 //    };
 
-    //$(".form_date").datetimepicker({
-    $("#datetimepicker").datetimepicker({
+    $(".form_date").datetimepicker({
         format: "yyyy-mm-dd",
         language:  'lv',
         startView: 4,
