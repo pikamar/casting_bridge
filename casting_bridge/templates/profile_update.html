@@ -89,7 +89,7 @@
                       <label class="btn btn-default">
                         <input type="radio" name="species" id="option2" autocomplete="off" value="woman">Sieviete
                       </label-->
-                      {{ form.species() }}
+                      {{ form.species(required="required") }}
                     </div>
 
                     <fieldset class="form-group">
@@ -228,7 +228,7 @@
                                 <span class="input-group-addon">
                                     <i class="fa fa-at"></i>
                                 </span>
-                                {{ form.email(class="form-control", placeholder="E-pasts*", required="required", maxlength=255) }}
+                                {{ form.email(class="form-control", placeholder="E-pasts*", type="email", required="required", maxlength=255) }}
                             </div>
                         </div>
                     </fieldset>
@@ -319,7 +319,7 @@
                       <label class="btn btn-default">
                         <input type="radio" name="speciality" id="option3" autocomplete="off" value="talent">Talants
                       </label-->
-                      {{ form.speciality() }}
+                      {{ form.speciality(required="required") }}
                     </div>
 
 
