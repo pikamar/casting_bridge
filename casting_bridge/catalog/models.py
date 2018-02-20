@@ -82,11 +82,13 @@ class Person(db.Model):
     workplace = db.Column(db.String(255))
     play_age_from = db.Column(db.Integer)
     play_age_to = db.Column(db.Integer)
+    status = db.Column(db.Integer)
+    status_date = db.Column(db.Date)
 
     skills = db.relationship('Skill', backref='person', lazy='dynamic')
     documents = db.relationship('Document', backref='document', lazy='dynamic')
 
-    def __init__(self, created=None, modified=None, name='', surname='', nickname='', pcode='', contract_nr='', birthdate='', my_phone_code='', my_phone='', email='', other_phone_code='', other_phone='', home_address='', height='', foot_size='', cloth_size='', voice='', contact_lenses=False, be_dressed=False, profile_image=None, is_active=False, species='',mother_phone_code = '',mother_phone = '',mother_name = '',father_phone_code = '',father_phone = '',father_name = '',speciality = '',experience = '',cv=None, current_occupation=None, workplace=None, play_age_from='', play_age_to=''):
+    def __init__(self, created=None, modified=None, name='', surname='', nickname='', pcode='', contract_nr='', birthdate='', my_phone_code='', my_phone='', email='', other_phone_code='', other_phone='', home_address='', height='', foot_size='', cloth_size='', voice='', contact_lenses=False, be_dressed=False, profile_image=None, is_active=False, species='',mother_phone_code = '',mother_phone = '',mother_name = '',father_phone_code = '',father_phone = '',father_name = '',speciality = '',experience = '',cv=None, current_occupation=None, workplace=None, play_age_from='', play_age_to='', status='', status_date=''): #
         self.created = created
         self.modified = modified
         self.name = name
@@ -123,6 +125,8 @@ class Person(db.Model):
         self.workplace = workplace
         self.play_age_from = play_age_from
         self.play_age_to = play_age_to
+        self.status = status
+        self.status_date = status_date
 
     def __repr__(self):
         return '<Person %d>' % self.id
@@ -136,12 +140,12 @@ class Skill(db.Model):
         return '<Skill %d>' % self.id
 
 class SelectMultipleFieldNoValidate(SelectMultipleField):
-    # Disable valiadation
+    # Disable validation
     def pre_validate(self, form):
         pass
 
 class SelectFieldNoValidate(SelectField):
-    # Disable valiadation
+    # Disable validation
     def pre_validate(self, form):
         pass
 
@@ -246,6 +250,11 @@ class BaseForm(Form):
     piercing = SelectMultipleFieldNoValidate('Piercings', choices=[])
     afraidof = SelectMultipleFieldNoValidate('I`am afraid of', choices=[])
     religion = SelectMultipleFieldNoValidate('Religion beliefs', choices=[])
+
+    # status
+    # status = IntegerField('Status', default=None)
+    status = SelectFieldNoValidate('Status', choices=[(None,u''),(1,u'Rēķins nosūtīts'),(2,u'Rēķins apmaksāts'),(3,u'Bildes atjaunotas')], default=None)
+    status_date = DateField('Status Date', validators=[Optional()])
 
     image1 = FileField('Image No.1')
     image2 = FileField('Image No.2')
