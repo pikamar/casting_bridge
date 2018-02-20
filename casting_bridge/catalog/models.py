@@ -67,7 +67,7 @@ class Person(db.Model):
     contact_lenses = db.Column(db.Boolean)
     be_dressed = db.Column(db.Boolean)
     profile_image = db.Column(db.String(255))
-    is_active = db.Column(db.Boolean) # inactive by default
+    is_active = db.Column(db.Boolean) # archived, inactive by default
     species = db.Column(db.String(255)) # 1-man, 2-woman, 3- animal
     mother_phone_code = db.Column(db.String(255))
     mother_phone = db.Column(db.String(255))
@@ -252,9 +252,9 @@ class BaseForm(Form):
     religion = SelectMultipleFieldNoValidate('Religion beliefs', choices=[])
 
     # status
-    # status = IntegerField('Status', default=None)
     status = SelectFieldNoValidate('Status', choices=[(None,u''),(1,u'Rēķins nosūtīts'),(2,u'Rēķins apmaksāts'),(3,u'Bildes atjaunotas')], default=None)
     status_date = DateField('Status Date', validators=[Optional()])
+    is_active = BooleanField('Is Archived')
 
     image1 = FileField('Image No.1')
     image2 = FileField('Image No.2')
