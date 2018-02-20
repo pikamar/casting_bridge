@@ -88,7 +88,7 @@ class Person(db.Model):
     skills = db.relationship('Skill', backref='person', lazy='dynamic')
     documents = db.relationship('Document', backref='document', lazy='dynamic')
 
-    def __init__(self, created=None, modified=None, name='', surname='', nickname='', pcode='', contract_nr='', birthdate='', my_phone_code='', my_phone='', email='', other_phone_code='', other_phone='', home_address='', height='', foot_size='', cloth_size='', voice='', contact_lenses=False, be_dressed=False, profile_image=None, is_active=False, species='',mother_phone_code = '',mother_phone = '',mother_name = '',father_phone_code = '',father_phone = '',father_name = '',speciality = '',experience = '',cv=None, current_occupation=None, workplace=None, play_age_from='', play_age_to='', status='', status_date=''): #
+    def __init__(self, created=None, modified=None, name='', surname='', nickname='', pcode='', contract_nr='', birthdate='', my_phone_code='', my_phone='', email='', other_phone_code='', other_phone='', home_address='', height='', foot_size='', cloth_size='', voice='', contact_lenses=False, be_dressed=False, profile_image=None, is_active=False, species='',mother_phone_code = '',mother_phone = '',mother_name = '',father_phone_code = '',father_phone = '',father_name = '',speciality = '',experience = '',cv=None, current_occupation=None, workplace=None, play_age_from='', play_age_to='', status='', status_date=None): #
         self.created = created
         self.modified = modified
         self.name = name
