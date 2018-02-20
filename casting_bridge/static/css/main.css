@@ -15,8 +15,11 @@ body {
 }
 
 .form-control[required] {
-	background-color: #FF3333;
-	color: #fff;
+	border-color: #fc0;
+}
+
+.form-control:invalid {
+	border-color: #F00;
 }
 
 .img-circle {
