@@ -76,7 +76,7 @@
                     <a href="{{ url_for('catalog.update_profile', id=profile.id) }}">
                     <img
                     {% if profile.profile_image is not none %}
-                      src="{{ url_for('profile_dir', filename=profile.profile_image) }}"
+                      src="{{ url_for('profile_dir', filename=profile.profile_image) }}?{{ profile.modified.utcnow() }}"
                     {% else %}
                       src="{{ url_for('static', filename='img/user_placeholder.jpg') }}"
                     {% endif %}

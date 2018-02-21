@@ -468,6 +468,13 @@
                     <h3><i class="fa fa-picture-o fa-fw"></i>Bildes</h3>
                     <fieldset class="form-group">
                         <div class="col-lg-12">
+                            <img
+                            {% if person.profile_image is not none %}
+                              src="{{ url_for('profile_dir', filename=person.profile_image) }}?{{ person.modified.utcnow() }}"
+                            {% else %}
+                              src="{{ url_for('static', filename='img/user_placeholder.jpg') }}"
+                            {% endif %}
+                            alt="Profile pic thumbnail" class="thumbnail" />
                             <label class="control-label" for="profile_image">Profila bilde</label>: {{ form.profile_image(style='display:inline;') }}<br>
                         </div>
                     </fieldset>
