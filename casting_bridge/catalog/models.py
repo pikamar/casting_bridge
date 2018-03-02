@@ -84,6 +84,10 @@ class Person(db.Model):
     play_age_to = db.Column(db.Integer)
     status = db.Column(db.Integer)
     status_date = db.Column(db.Date)
+    status_sent_date = db.Column(db.Date)
+    status_due_date = db.Column(db.Date)
+    status_payed = db.Column(db.Integer)
+    status_payed_date = db.Column(db.Date)
 
     skills = db.relationship('Skill', backref='person', lazy='dynamic')
     documents = db.relationship('Document', backref='document', lazy='dynamic')
@@ -127,6 +131,10 @@ class Person(db.Model):
         self.play_age_to = play_age_to
         self.status = status
         self.status_date = status_date
+        self.status_sent_date = status_sent_date
+        self.status_due_date = status_due_date
+        self.status_payed = status_payed
+        self.status_payed_date = status_payed_date
 
     def __repr__(self):
         return '<Person %d>' % self.id
@@ -167,6 +175,12 @@ class CustomRadioInput(Select):
 
 class RadioButtonField(SelectField):
     widget = CustomRadioInput()
+
+class RadioButtonFieldNoValidate(SelectField):
+    widget = CustomRadioInput()
+    # Disable validation
+    def pre_validate(self, form):
+        pass
 
 class BaseForm(Form):
     creationDate = datetime.datetime.now(pytz.timezone("Europe/Riga"))
@@ -252,9 +266,14 @@ class BaseForm(Form):
     religion = SelectMultipleFieldNoValidate('Religion beliefs', choices=[])
 
     # status
-    status = SelectFieldNoValidate('Status', choices=[(None,u''),(1,u'Rēķins nosūtīts'),(2,u'Rēķins apmaksāts'),(3,u'Bildes atjaunotas')], default=None)
-    status_date = DateField('Status Date', validators=[Optional()])
+    status_sent_date = DateField('Status Sent Date', validators=[Optional()])
+    status_due_date = DateField('Status Due Date', validators=[Optional()])
+    status_payed = RadioButtonFieldNoValidate('Status Payed', choices=[(1,u'apmaksāts'),(2,u'neapmaksāts')], default=None)
+    status_payed_date = DateField('Status Payed Date', validators=[Optional()])
     is_active = BooleanField('Is Archived')
+    # images updated
+    status = RadioButtonFieldNoValidate('Status Images', choices=[(1,u'atjaunotas'),(2,u'neatjaunotas')], default=None)
+    status_date = DateField('Status Images Date', validators=[Optional()])
 
     image1 = FileField('Image No.1')
     image2 = FileField('Image No.2')

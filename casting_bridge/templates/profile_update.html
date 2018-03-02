@@ -436,15 +436,58 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <label class="control-label" for="created">Statuss datu bāzē</label>
-                            <div class="input-group col-md-12">
-                                {{ form.status(class="form-control selectpicker") }}
-                            </div>
-                            <div class="input-group date col-md-12 form_date" data-date="">
-                                {{ form.status_date(class="form-control", placeholder="Y-M-D") }}
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
+                            <label class="control-label">Statuss datu bāzē</label>
+                            <fieldset class="form-group">
+                                <br />
+                                <div class="col-md-12">
+                                    RĒĶINS:
+                                </div>
+                                <div class="col-md-5">
+                                    <label for="status_sent_date">Nosūtīts</label>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="input-group date  form_date" data-date="">
+                                        {{ form.status_sent_date(class="form-control", placeholder="Y-M-D") }}
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <label for="status_due_date">Apmaksāt līdz</label>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="input-group date form_date" data-date="">
+                                        {{ form.status_due_date(class="form-control", placeholder="Y-M-D") }}
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                                <div class="btn-group col-md-12" data-toggle="buttons">
+                                    {{ form.status_payed() }}
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="input-group date form_date" data-date="">
+                                        {{ form.status_payed_date(class="form-control", placeholder="Y-M-D") }}
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <div class="col-md-12">
+                                    BILDES:
+                                </div>
+                                <div class="btn-group col-md-12" data-toggle="buttons">
+                                    {{ form.status() }}
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="input-group date form_date" data-date="">
+                                        {{ form.status_date(class="form-control", placeholder="Y-M-D") }}
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
                         <div class="col-lg-12">
                             <p>{{ form.is_active }} <strong>Nevēlas filmēties / Neaktīvs / Arhivēts</strong></p>
