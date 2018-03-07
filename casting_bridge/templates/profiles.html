@@ -83,7 +83,7 @@
                       class="center-block img-circle img-responsive
                       {% if profile.is_active %}
                       p-unavailable
-                      {% elif curtime - profile.modified > pDeltaTime %}
+                      {% elif profile.status != 1 %}
                       p-old
                       {% else %}
                       p-available

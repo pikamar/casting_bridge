@@ -268,11 +268,11 @@ class BaseForm(Form):
     # status
     status_sent_date = DateField('Status Sent Date', validators=[Optional()])
     status_due_date = DateField('Status Due Date', validators=[Optional()])
-    status_payed = RadioButtonFieldNoValidate('Status Payed', choices=[(1,u'apmaksāts'),(2,u'neapmaksāts')], default=None)
+    status_payed = RadioButtonFieldNoValidate('Status Payed', choices=[(1,u'apmaksāts'),(None,u'neapmaksāts')], default=None)
     status_payed_date = DateField('Status Payed Date', validators=[Optional()])
     is_active = BooleanField('Is Archived')
     # images updated
-    status = RadioButtonFieldNoValidate('Status Images', choices=[(1,u'atjaunotas'),(2,u'neatjaunotas')], default=None)
+    status = RadioButtonFieldNoValidate('Status Images', choices=[(1,u'atjaunotas'),(None,u'neatjaunotas')], default=None)
     status_date = DateField('Status Images Date', validators=[Optional()])
 
     image1 = FileField('Image No.1')
