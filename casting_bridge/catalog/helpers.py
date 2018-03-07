@@ -11,6 +11,8 @@ def allowed_file(filename):
             filename.lower().rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 def file_upload(type, name, id):
+    if name not in request.files:
+        return
     file = request.files[name]
     filename = ''
     if file and allowed_file(file.filename):
