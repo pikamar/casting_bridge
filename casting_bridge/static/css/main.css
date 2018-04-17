@@ -1,6 +1,13 @@
 body {
-  padding-top: 50px;
+  padding-top: 220px;
 }
+
+@media (min-width:700px) {
+	body {
+	  padding-top: 50px;
+	}
+}
+
 .top-pad {
   padding: 40px 15px;
   text-align: center;
@@ -37,4 +44,12 @@ body {
 
 .p-unavailable {
 	border-color: #999;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+	display: block;
+}
+
+video {
+	width: 100%;
 }
