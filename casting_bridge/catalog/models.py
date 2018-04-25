@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
-from decimal import Decimal
-from wtforms import TextField, DecimalField, SelectField, FileField, DateField, BooleanField, SelectMultipleField, RadioField, TextAreaField, PasswordField
-from wtforms.validators import InputRequired, NumberRange, ValidationError, Optional, Length
+import datetime
+from wtforms import TextField, \
+    SelectField, \
+    FileField, \
+    DateField, \
+    BooleanField, \
+    SelectMultipleField, \
+    TextAreaField, \
+    PasswordField
+from wtforms.validators import InputRequired, Optional, Length
 from wtforms.widgets import html_params, Select, HTMLString
 from flask_wtf import Form
 from flask_wtf.html5 import TelField
 from casting_bridge import db
-import datetime
-from datetime import date
 import pytz
 
 class Document(db.Model):
@@ -140,12 +145,12 @@ class Person(db.Model):
         return '<Person %d>' % self.id
 
 class Skill(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    skill_id = db.Column(db.Integer, primary_key=True)
     person_id = db.Column(db.Integer, db.ForeignKey('person.id'), index=True)
     classifier_id = db.Column(db.Integer, db.ForeignKey('classifier.id'), index=True)
 
     def __repr__(self):
-        return '<Skill %d>' % self.id
+        return '<Skill %d>' % self.skill_id
 
 class SelectMultipleFieldNoValidate(SelectMultipleField):
     # Disable validation
@@ -165,10 +170,13 @@ class CustomRadioInput(Select):
         for val, label, selected in field.iter_choices():
             #print("choices [%s] [%s] [%s]" % (val,label, selected))
             html.append(
-                '<label class="btn btn-default %s"> <input type="radio" %s> %s </label>' % ( 'active' if selected else '',
+                '<label class="btn btn-default %s"> <input type="radio" %s> %s </label>' \
+                % (
+                    'active' if selected else '',
                     html_params(
                         name=field.name, value=val, checked=selected, **kwargs
-                    ), label
+                    ),
+                    label
                 )
             )
         return HTMLString(' '.join(html))
@@ -188,9 +196,17 @@ class BaseForm(Form):
 
     # Personal data
     created = DateField('Created', default=creationDate)
-    species = RadioButtonField('Species', validators=[InputRequired()], choices=[('man',u'Vīrietis'),('woman',u'Sieviete')], default='')
-    name = TextField('Name', validators=[InputRequired(),Length(max=255)])
-    surname = TextField('Surname', validators=[InputRequired(),Length(max=255)])
+    species = RadioButtonField(
+        'Species',
+        validators=[InputRequired()],
+        choices=[
+            ('man', u'Vīrietis'),
+            ('woman', u'Sieviete')
+        ],
+        default=''
+    )
+    name = TextField('Name', validators=[InputRequired(), Length(max=255)])
+    surname = TextField('Surname', validators=[InputRequired(), Length(max=255)])
     nickname = TextField('Nickname', validators=[Length(max=255)])
     pcode = TextField('ID code', validators=[Length(max=255)])
     contract_nr = TextField('Passport nr.', validators=[Length(max=255)])
@@ -207,12 +223,13 @@ class BaseForm(Form):
     father_name = TextField('Father name', validators=[Length(max=255)])
 
     #Contact information
-    my_phone_code  = TelField('Phone code', validators=[Length(max=255)])
-    my_phone = TelField('Phone', validators=[InputRequired(),Length(max=255)])
-    email = TextField('E-mail', validators=[InputRequired(),Length(max=255)])
+    my_phone_code = TelField('Phone code', validators=[Length(max=255)])
+    my_phone = TelField('Phone', validators=[InputRequired(), Length(max=255)])
+    email = TextField('E-mail', validators=[InputRequired(), Length(max=255)])
+    extra_emails = SelectMultipleFieldNoValidate('Extra emails', choices=[])
     other_phone_code = TextField('Other phone code', validators=[Length(max=255)])
     other_phone = TextField('Other phone', validators=[Length(max=255)])
-    home_address = TextField('Home address', validators=[InputRequired(),Length(max=255)])
+    home_address = TextField('Home address', validators=[InputRequired(), Length(max=255)])
     city = SelectField('Nearest city', choices=[])
 
     #Personal carecteristics
@@ -224,7 +241,15 @@ class BaseForm(Form):
     eyecolor = SelectField('Eye color', choices=[])
 
     #Who you are?
-    speciality = RadioButtonField('Speciality', validators=[InputRequired()], choices=[('actor',u'Aktieris'),('professional',u'Profesionālis'),('talent',u'Talants')])
+    speciality = RadioButtonField(
+        'Speciality',
+        validators=[InputRequired()],
+        choices=[
+            ('actor', u'Aktieris'),
+            ('professional', u'Profesionālis'),
+            ('talent', u'Talants')
+        ]
+    )
     subspeciality = SelectMultipleFieldNoValidate('Subspeciality', choices=[])
     experience = TextAreaField('Experience', validators=[Length(max=1000)])
     cv = FileField('CV')
@@ -249,30 +274,44 @@ class BaseForm(Form):
     degree = SelectMultipleFieldNoValidate('Level of education', choices=[])
     current_occupation = SelectFieldNoValidate('Current occupation', choices=[])
     workplace = TextField('Workplace', validators=[Length(max=255)])
-
+    workplaces = SelectMultipleFieldNoValidate('Workplaces', choices=[])
 
     #My whishes
     want_participate = SelectMultipleFieldNoValidate('Want to participate', choices=[])
-    dont_want_participate = SelectMultipleFieldNoValidate('Don`t want to participate', choices=[])
+    dont_want_participate = SelectMultipleFieldNoValidate('Don\'t want to participate', choices=[])
     interested_in = SelectMultipleFieldNoValidate('Interested in', choices=[])
 
     #Notes for consideration
     #contact_lenses = TextField('Contact Lenses')
     contact_lenses = BooleanField('Contact Lenses')
-    be_dressed = BooleanField('Don`t want to be undressed')
+    be_dressed = BooleanField('Don\'t want to be undressed')
     tattoo = SelectMultipleFieldNoValidate('Tattoos', choices=[])
     piercing = SelectMultipleFieldNoValidate('Piercings', choices=[])
-    afraidof = SelectMultipleFieldNoValidate('I`am afraid of', choices=[])
+    afraidof = SelectMultipleFieldNoValidate('I\'am afraid of', choices=[])
     religion = SelectMultipleFieldNoValidate('Religion beliefs', choices=[])
 
     # status
     status_sent_date = DateField('Status Sent Date', validators=[Optional()])
     status_due_date = DateField('Status Due Date', validators=[Optional()])
-    status_payed = RadioButtonFieldNoValidate('Status Payed', choices=[(1,u'apmaksāts'),(None,u'neapmaksāts')], default=None)
+    status_payed = RadioButtonFieldNoValidate(
+        'Status Payed',
+        choices=[
+            (1, u'apmaksāts'),
+            (None, u'neapmaksāts')
+        ],
+        default=None
+    )
     status_payed_date = DateField('Status Payed Date', validators=[Optional()])
     is_active = BooleanField('Is Archived')
     # images updated
-    status = RadioButtonFieldNoValidate('Status Images', choices=[(1,u'atjaunotas'),(None,u'neatjaunotas')], default=None)
+    status = RadioButtonFieldNoValidate(
+        'Status Images',
+        choices=[
+            (1, u'atjaunotas'),
+            (None, u'neatjaunotas')
+        ],
+        default=None
+    )
     status_date = DateField('Status Images Date', validators=[Optional()])
 
     image1 = FileField('Image No.1')
@@ -294,6 +333,6 @@ class UpdateForm(BaseForm):
     image5 = FileField('Image No.5')
 
 class LoginForm(Form):
-    username = TextField('Username', validators=[InputRequired(),Length(max=20)])
-    password = PasswordField('Password', validators=[InputRequired(),Length(max=20)])
+    username = TextField('Username', validators=[InputRequired(), Length(max=20)])
+    password = PasswordField('Password', validators=[InputRequired(), Length(max=20)])
 

@@ -1,0 +1,460 @@
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+	<div class="well">
+		<h3><i class="fa fa-user fa-fw"></i>Personas dati</h3>
+
+		<div class="btn-group required-btns" data-toggle="buttons">
+		  {{ form.species(required="required") }}
+		</div>
+
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<!--{{ form.name.label(class="control-label") }}--><br />  {{ form.name(class="form-control", placeholder="Vārds*", required="required", maxlength=255) }}<br />
+				{{ form.surname(class="form-control", placeholder="Uzvārds*", required="required", maxlength=255) }}<br />
+				{{ form.nickname(class="form-control", placeholder="Skatuves vārds", maxlength=255) }}<br />
+				{{ form.pcode(class="form-control", placeholder="Personas kods", maxlength=255) }}<br />
+				{{ form.contract_nr(class="form-control", placeholder="Vienošanās numurs", maxlength=255) }}
+			<div>
+		</fieldset>
+
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<!--label for="dtp_input2" class="col-md-4 control-label">Date Picking</label-->
+				<div class="input-group date col-md-12 form_date" data-date="">
+					{{ form.birthdate(class="form-control", placeholder="Dzimšanas diena*") }}
+					<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+			</div>
+		</fieldset>
+
+		<label class="control-label">Spēles vecums</label>
+		<fieldset class="form-group">
+			<div class="col-lg-2">
+				<div class="input-group">
+					{{ form.play_age_from(class="form-control", placeholder="no", maxlength=2) }}
+				</div>
+			</div>
+			<div class="col-lg-2">
+				<div class="input-group">
+					{{ form.play_age_to(class="form-control", placeholder="līdz", maxlength=2) }}
+				</div>
+			</div>
+		</fieldset>
+
+		<!--label class="control-label col-lg-6">Dzimšanas datums</label-->
+		<!--div class="input-group">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+			{{ form.birthdate(class="form-control", placeholder="Dzimšanas datums*") }}
+		</div-->
+
+	</div>
+  </div>
+  <div class="col-md-6">
+	<div class="well">
+		<h3><i class="fa fa-users fa-fw"></i> Ģimene</h3>
+		<p id="age_control">Personām, jaunākām par 18. gadiem norādīt arī vecāku vārdu uzvārdu un tālruņa numuru.</p>
+
+		<fieldset class="form-group">
+			<div class="col-lg-5">
+				<div class="input-group">
+					{{ form.mother_name(class="form-control", placeholder="Mātes vārds/uzvārds", maxlength=255) }}
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="fa fa-plus"></i>
+					</span>
+					{{ form.mother_phone_code(class="form-control", placeholder="", value="371", maxlength=3) }}
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="input-group">
+					{{ form.mother_phone(class="form-control", placeholder="Mātes tel. nr.", maxlength=255) }}
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset class="form-group">
+			<div class="col-lg-5">
+				<div class="input-group">
+					{{ form.father_name(class="form-control", placeholder="Tēva vārds/uzvārds", maxlength=255) }}
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="fa fa-plus"></i>
+					</span>
+					{{ form.father_phone_code(class="form-control", placeholder="", value="371", maxlength=3) }}
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="input-group">
+					{{ form.father_phone(class="form-control", placeholder="Tēva tel. nr.", maxlength=255) }}
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<label class="control-label" for="family_notes">Piezīmes par ģimeni</label><br />{{ form.family_notes() }}<br />
+			</div>
+		</fieldset>
+
+		<h3><i class="fa fa-phone fa-fw"></i>Kontaktinformācija</h3>
+
+		<fieldset class="form-group">
+			<div class="col-lg-3">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="fa fa-plus"></i>
+					</span>
+					{{ form.my_phone_code(class="form-control", placeholder="", value="371", maxlength=3) }}
+				</div>
+			</div>
+			<div class="col-lg-9">
+				<div class="input-group">
+					{{ form.my_phone(class="form-control", placeholder="Telefona numurs*", required="required", maxlength=255) }}
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset class="form-group">
+			<div class="col-lg-3">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="fa fa-plus"></i>
+					</span>
+					{{ form.other_phone_code(class="form-control", placeholder="", value="371", maxlength=3) }}
+				</div>
+			</div>
+			<div class="col-lg-9">
+				<div class="input-group">
+					{{ form.other_phone(class="form-control", placeholder="Drošības tālrunis", maxlength=255) }}
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset class="form-group">
+			<div class="email-group col-lg-11">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="fa fa-at"></i>
+					</span>
+					{{ form.email(class="form-control", placeholder="E-pasts*", type="email", required="required", maxlength=255) }}
+				</div>
+			</div>
+			<div class="col-lg-1">
+				<button class="btn add-extra-email">
+					<i class="fa fa-plus"></i>
+				</button>
+			</div>
+		</fieldset>
+
+		<fieldset class="form-group">
+			<div class="col-lg-6">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="fa fa-envelope-o"></i>
+					</span>
+					{{ form.home_address(class="form-control", placeholder="Dzīvesvietas adrese*", required="required", maxlength=255) }}
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="input-group">
+					<!--span class="input-group-addon">
+						<i class="fa fa-fort-awesome"></i>
+					</span-->
+					{{ form.city(class="form-control search_selectpicker", title='Tuvākā pilsēta*') }}
+				</div>
+			</div>
+		</fieldset>
+
+	</div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+	<div class="well">
+		<h3><i class="fa fa-eye fa-fw"></i>Personīgās īpašības</h3>
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				{{ form.height(class="form-control", placeholder="Augums centimetros", maxlength=3) }}<br />
+				{{ form.foot_size(class="form-control selectpicker", title="Apavu izmērs...") }}
+
+				<label class="control-label">Izmēru tabula</label>
+				<a href="#man_sizeModal" data-toggle="modal">vīriešiem</a> /
+				<a href="#woman_sizeModal" data-toggle="modal">sievietēm</a>
+				<br />
+				{{ form.cloth_size(class="form-control search_selectpicker", title='Apģērba izmērs EU...') }}<br /><br />
+
+				{{ form.voice(class="form-control selectpicker", title='Balss tembrs...') }}<br /><br />
+
+				{{ form.haircolor(class="form-control selectpicker", title='Matu krāsa*') }}<br /><br />
+				{{ form.eyecolor(class="form-control selectpicker", title='Acu krāsa*') }}
+			</div>
+		</fieldset>
+	</div>
+  </div>
+  <!--div class="col-md-4">
+	<div class="well">
+		<h3><i class="fa fa-star fa-fw"></i>Kas tu esi?</h3>
+		<p>Izvēlies vienu no opcijām un aizpildi to</p>
+		<div class="input-group">
+		  <span class="input-group-addon">
+			<input type="radio" id="whoypuare1" name="whoypuare" aria-label="...">
+		  </span>
+		  <input type="text" name="actor" id="actor" class="form-control" aria-label="..." placeholder="Aktieris" disabled>
+		</div>
+		<br />
+		<div class="input-group">
+		  <span class="input-group-addon">
+			<input type="radio" id="whoypuare2" name="whoypuare" aria-label="...">
+		  </span>
+		  <input type="text" name="professional" id="professional" class="form-control" aria-label="..." placeholder="Profesionālis" disabled>
+		</div>
+		<br />
+		<div class="input-group">
+		  <span class="input-group-addon">
+			<input type="radio" id="whoypuare3" name="whoypuare" aria-label="...">
+		  </span>
+		  <input type="text" name="talent" id="talent" class="form-control" aria-label="..." placeholder="Talants" disabled>
+		</div>
+	</div>
+  </div-->
+  <div class="col-md-4">
+	<div class="well">
+		<h3><i class="fa fa-star fa-fw"></i>Kas tu esi?</h3>
+		<p>Izvēlies tikai vienu no opcijām</p>
+
+		<div class="btn-group required-btns" data-toggle="buttons">
+		  {{ form.speciality(required="required") }}
+		</div>
+
+
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<div class="input-group">
+					<br />{{ form.subspeciality(class="form-control", placeholder="specializācija") }}
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<div class="input-group">
+					<label class="control-label" for="experience">Filmēšanās pieredze</label>
+					{{ form.experience(class="form-control", placeholder="Konkrēti piemēri un lomas (filmas, reklāmas, TV, u.c)", rows="10", maxlength=1000) }}
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<div class="input-group">
+					<label class="control-label" for="experience">CV (doc vai pdf formātā)</label>
+					<br />{{ form.cv(style='display:inline;') }}
+					{% if person and person.cv is not none %}
+						 <br /><br />Apskatīties CV: <a href="{{ url_for('download_file', filename=person.cv) }}">{{ person.cv }}</a>
+					{% endif %}
+				</div>
+			</div>
+		</fieldset>
+
+	</div>
+  </div>
+  <div class="col-md-4">
+	<div class="well">
+		<h3><i class="fa fa-music fa-fw"></i>Prasmes</h3>
+
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<!--select multiple name="danceskill" id="danceskill" data-role="tagsinput" placeholder="deju veidi"></select-->
+				<label class="control-label" for="danceskill">Dejotprasme</label><br />{{ form.danceskill(placeholder="deju veidi") }}<br />
+				<label class="control-label" for="singskill">Dziedātprasme</label><br />{{ form.singskill(placeholder="koris, grupa, solo") }}<br />
+				<label class="control-label" for="musicskill">Mūzikas instrumenti</label><br />{{ form.musicskill() }}<br />
+				<label class="control-label" for="sportskill">Sporta veidi</label><br />{{ form.sportskill() }}<br />
+				<label class="control-label" for="swimskill">Peldētprasme</label><br />{{ form.swimskill(placeholder="novērtē no 1 - 10") }}<br />
+				<label class="control-label" for="driveskill">Transportlīdzekļa vadīšana</label><br />{{ form.driveskill() }}<br />
+				<label class="control-label" for="languageskill">Valodu zināšanas</label><br />{{ form.languageskill() }}<br />
+				<label class="control-label" for="otherskill">Hobiji</label><br />{{ form.otherskill() }}
+			</div>
+		</fieldset>
+
+
+	</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+	<div class="well">
+		<h3><i class="fa fa-university fa-fw"></i>Darbs un izglītība</h3>
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<label class="control-label" for="educational_institution">Mācību iestāde</label><br />{{ form.educational_institution() }}<br />
+				<label class="control-label" for="learned_profession">Apgūtā profesija</label><br />{{ form.learned_profession() }}<br />
+				<label class="control-label" for="degree">Klase vai līmenis</label><br />{{ form.degree() }}<br /><br />
+				{{ form.current_occupation(class="form-control selectpicker", title='Pašreizējā nodarbošanās...') }}<br /><br />
+				<label class="control-label" for="workplace">Darba vieta/s</label><br />
+				{{ form.workplace(class="form-control", title="Teksta ievadlauks") }}<br />
+				{{ form.workplaces(placeholder="darba vietu birkas") }}<br />
+			</div>
+		</fieldset>
+	</div>
+  </div>
+  <div class="col-md-4">
+	<div class="well">
+		<h3><i class="fa fa-list-ol fa-fw"></i>Manas vēlmes</h3>
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<label class="control-label" for="want_participate">Gribu piedalīties</label><br />{{ form.want_participate() }}<br />
+				<label class="control-label" for="dont_want_participate">Negribu piedalīties</label><br />{{ form.dont_want_participate() }}<br />
+				<label class="control-label" for="interested_in">Mani interesē</label><br />{{ form.interested_in() }}
+			</div>
+		</fieldset>
+	</div>
+  </div>
+  <div class="col-md-4">
+	<div class="well">
+		<h3><i class="fa fa-book fa-fw"></i>Piezīmes, ko jāņem vērā</h3>
+		<p>{{ form.contact_lenses }} Kontaktlēcas</p>
+		<p>{{ form.be_dressed }} Nevēlos atkailināties kameras priekšā</p>
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<label class="control-label" for="tattoo">Tetovējumi</label><br />{{ form.tattoo() }}<br />
+				<label class="control-label" for="piercing">Pīrsingi</label><br />{{ form.piercing() }}<br />
+				<label class="control-label" for="afraidof">Bailes no</label><br />{{ form.afraidof() }}<br />
+				<label class="control-label" for="religion">Reliģiskā pārliecība</label><br />{{ form.religion() }}
+			</div>
+		</fieldset>
+	</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+	<div class="well">
+		<h3><i class="fa fa-sticky-note-o fa-fw"></i>Portfolio</h3>
+		<!-- empty -->
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<label class="control-label" for="created">Pievienots datubāzei</label>
+				<div class="input-group date col-md-12 form_date" data-date="">
+					{{ form.created(class="form-control", placeholder="Y-M-D") }}
+					<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<label class="control-label">Statuss datu bāzē</label>
+				<fieldset class="form-group">
+					<br />
+					<div class="col-md-12">
+						RĒĶINS:
+					</div>
+					<div class="col-md-5">
+						<label for="status_sent_date">Nosūtīts</label>
+					</div>
+					<div class="col-md-7">
+						<div class="input-group date  form_date" data-date="">
+							{{ form.status_sent_date(class="form-control", placeholder="Y-M-D") }}
+							<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<label for="status_due_date">Apmaksāt līdz</label>
+					</div>
+					<div class="col-md-7">
+						<div class="input-group date form_date" data-date="">
+							{{ form.status_due_date(class="form-control", placeholder="Y-M-D") }}
+							<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</div>
+					<div class="btn-group col-md-12" data-toggle="buttons">
+						{{ form.status_payed() }}
+					</div>
+					<div class="col-md-12">
+						<div class="input-group date form_date" data-date="">
+							{{ form.status_payed_date(class="form-control", placeholder="Y-M-D") }}
+							<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset class="form-group">
+					<div class="col-md-12">
+						BILDES:
+					</div>
+					<div class="btn-group col-md-12" data-toggle="buttons">
+						{{ form.status() }}
+					</div>
+					<div class="col-md-12">
+						<div class="input-group date form_date" data-date="">
+							{{ form.status_date(class="form-control", placeholder="Y-M-D") }}
+							<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+			<div class="col-lg-12">
+				<p>{{ form.is_active }} <strong>Nevēlas filmēties / Neaktīvs / Arhivēts</strong></p>
+			</div>
+		</fieldset>
+	</div>
+  </div>
+  <div class="col-md-4">
+	<div class="well">
+		<h3><i class="fa fa-sticky-note-o fa-fw"></i>Piezīmes</h3>
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<label class="control-label" for="cb_tags">CB birkas</label><br />{{ form.cb_tags() }}<br />
+			</div>
+		</fieldset>
+		<!-- empty -->
+	</div>
+  </div>
+  <div class="col-md-4">
+	<div class="well">
+		<h3><i class="fa fa-picture-o fa-fw"></i>Bildes</h3>
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<img
+				{% if person and person.profile_image is not none %}
+				  src="{{ url_for('profile_dir', filename=person.profile_image) }}?{{ person.modified.utcnow() }}"
+				{% else %}
+				  src="{{ url_for('static', filename='img/user_placeholder.jpg') }}"
+				{% endif %}
+				alt="Profile pic thumbnail" class="thumbnail" />
+				{% if person and person.profile_image is not none %}
+				<a href="{{ url_for('catalog.profile_photo_rotate', person_id=person.id, angle=-90) }}" class="profile-photo rotate fa fa-repeat" aria-hidden="true" title="Pagriezt pulksteņrādītāja virzienā">&nbsp;</a>
+				<a href="{{ url_for('catalog.profile_photo_rotate', person_id=person.id, angle=90) }}" class="profile-photo rotate fa fa-undo" aria-hidden="true" title="Pagriezt pret-pulksteņrādītāja virzienā">&nbsp;</a>
+				{% endif %}
+				<label class="control-label" for="profile_image">Profila bilde</label>: {{ form.profile_image(style='display:inline;') }}<br />
+			</div>
+		</fieldset>
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<label class="control-label">Bildes</label><br />
+				<input id="input-4" name="images[]" type="file" multiple class="file-loading">
+			</div>
+		</fieldset>
+		<fieldset class="form-group">
+			<div class="col-lg-12">
+				<label class="control-label" for="video">Video:</label><br />
+				{{ form.video(style='display:inline;') }}<br />
+				<label class="control-label" for="audio">Audio:</label><br />
+				{{ form.audio(style='display:inline;') }}
+			</div>
+		</fieldset>
+	</div>
+  </div>
+</div>
+
+{% endblock %}

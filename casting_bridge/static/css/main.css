@@ -2,6 +2,10 @@ body {
   padding-top: 220px;
 }
 
+body.modal-open {
+	overflow: visible;
+}
+
 @media (min-width:700px) {
 	body {
 	  padding-top: 50px;
@@ -21,11 +25,19 @@ body {
 	position: absolute;
 }
 
-.form-control[required] {
+.selectpicker + .bootstrap-select button[title$="..."],
+.selectpicker + .bootstrap-select button[title$="*"] {
+	color: gray;
+}
+
+.form-control[required],
+.selectpicker[required] + .bootstrap-select button,
+.btn-group.required-btns .btn.btn-default {
 	border-color: #fc0;
 }
 
-.form-control:invalid {
+.form-control:invalid,
+.selectpicker:invalid + .bootstrap-select button {
 	border-color: #F00;
 }
 
@@ -46,10 +58,27 @@ body {
 	border-color: #999;
 }
 
+.p-unpayed {
+	border-color: #A00;
+}
+
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
 	display: block;
 }
 
 video {
 	width: 100%;
+}
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn),
+.bootstrap-select {
+	max-width: 100%;
+}
+
+.bootstrap-tagsinput .tag.label-danger {
+	float: right;
+}
+
+.bootstrap-tagsinput .tag.label-danger [data-role="remove"] {
+	margin-left: 0;
 }

@@ -19,26 +19,32 @@
                     role="form"
                     enctype="multipart/form-data" class="form-horizontal">
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <select class="selectpicker" name="species" title="Dzimums">
                     <option value="man"{% if 'man' == request.args.species %} selected{% endif %}>Vīrietis</option>
                     <option value="woman"{% if 'woman' == request.args.species %} selected{% endif %}>Sieviete</option>
                   </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <select class="selectpicker" name="speciality" title="Specialitāte">
                     <option value="actor"{% if 'actor' == request.args.speciality %} selected{% endif %}>Aktieris</option>
                     <option value="professional"{% if 'professional' == request.args.speciality %} selected{% endif %}>Profesionālis</option>
                     <option value="talent"{% if 'talent' == request.args.speciality %} selected{% endif %}>Talants</option>
                   </select>
                 </div>
+                <div class="col-md-2">
+                  <input type="text" name="id" id="id" class="form-control" aria-label="..." placeholder="ID numurs" value="{{ request.args.id }}" />
+                </div>
+                <div class="col-md-2">
+                  <input type="text" name="phone" id="phone" class="form-control" aria-label="..." placeholder="Telefons" value="{{ request.args.phone }}" />
+                </div>
                 <div class="col-md-1">
                   <label class="control-label">Vecums: </label>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1">
                   <input type="text" name="age_from" id="age_from" class="form-control" aria-label="..." placeholder="no" maxlength="2" value="{{ request.args.age_from }}" />
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1">
                   <input type="text" name="age_to" id="age_to" class="form-control" aria-label="..." placeholder="līdz" maxlength="2" value="{{ request.args.age_to }}" />
                 </div>
               </div><br>
@@ -58,11 +64,23 @@
                   </select>
                 </div>
                 <div class="col-md-2">
-                  <input type="text" name="skills" id="skills" class="form-control" aria-label="..." placeholder="Īpašības" />
+                  <input type="text" name="skills" id="skills" class="form-control" aria-label="..." placeholder="Īpašības" /><br />
+                  <input type="checkbox" name="any_skills "{% if request.args.any_skills != '' %} checked{% endif %} value="yes" /> <label for="any_skills">Jebkura</label>
                 </div>
                 <div class="col-md-2">
                   <button type="submit" class="btn btn-warning">Meklēt</button>
                   <input type="reset" class="btn btn-default form-reset" value="Notīrīt" />
+                </div>
+              </div><br>
+              <div class="row">
+                <div class="col-md-4">
+                  <select name="sort" id="sort" class="form-control">
+                    <option value="">Kārtot pēc... (ID)</option>
+                    <option value="1"{% if request.args.sort == '1' %} selected{% endif %}>Kārtot pēc izveidošanas datuma (aug.)</option>
+                    <option value="2"{% if request.args.sort == '2' %} selected{% endif %}>Kārtot pēc izveidošanas datuma (dil.)</option>
+                    <option value="3"{% if request.args.sort == '3' %} selected{% endif %}>Kārtot pēc statusa (aug.)</option>
+                    <option value="4"{% if request.args.sort == '4' %} selected{% endif %}>Kārtot pēc statusa (dil.)</option>
+                  </select>
                 </div>
               </div>
             </form>
@@ -83,6 +101,8 @@
                       class="center-block img-circle img-responsive
                       {% if profile.is_active %}
                       p-unavailable
+                      {% elif profile.status_payed != 1 %}
+                      p-unpayed
                       {% elif profile.status != 1 %}
                       p-old
                       {% else %}
@@ -110,8 +130,8 @@
                   </a>
                 {% else %}
                   {{ "<< Iepriekšējā lapa" }}
-                {% endif %} |
-
+                {% endif %}
+                |
                 {% for page in profiles.iter_pages() %}
                   {% if page %}
                     {% if page != profiles.page %}
@@ -123,7 +143,7 @@
                     <span class=ellipsis>…</span>
                   {% endif %}
                 {% endfor %}
-
+                |
                 {% if profiles.has_next %}
                   <a href="{{ url_for(request.endpoint, page=profiles.next_num, **request.args) }}">
                     {{ "Nākošā lapa >>" }}
